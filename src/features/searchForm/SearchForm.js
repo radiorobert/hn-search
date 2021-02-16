@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  submitSearch,
-  selectSearchValue,
-} from './searchSlice';
+import { connect } from 'react-redux';
+import { submitSearch } from './searchSlice';
 
-export function SearchForm() {
-  const searchStr = useSelector(selectSearchValue);
-  const dispatch = useDispatch();
+
+const SearchForm = ({ submitSearch }) => {
   const [searchValue, updateSearchValue] = useState('');  // hook for search field, redux for submitForm
 
   return (
@@ -19,11 +15,15 @@ export function SearchForm() {
         onChange={ e => updateSearchValue(e.target.value) }
       />
       <button
-        onClick={ e => dispatch(submitSearch(e.target.value)) }
+        onClick={ e => submitSearch({text: searchValue}) }
       >
         GO!
       </button>
 
     </div>
   );
-}
+};
+
+const mapDispatchToProps = { submitSearch };
+
+export default connect(null, mapDispatchToProps)(SearchForm);
