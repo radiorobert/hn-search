@@ -7,13 +7,12 @@ import {
 
 const mapStateToProps = state => {
   return {
-    prevSearches: state.searches
+    prevSearches: state.searches.history
   };
 };
 
 const SearchList = ({ prevSearches }) => {
 
-  console.log(prevSearches)
   return (
     <div>
       <h3>Previous Searches</h3>

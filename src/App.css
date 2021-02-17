@@ -13,17 +13,22 @@
   }
 }
 
-.App-header {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-}
 
 .App-link {
   color: rgb(112, 76, 182);
+}
+
+#results {
+  width: 75%;
+}
+
+#history {
+  width: 25%;
+}
+.others {
+  justify-content: space-evenly;
+  display: flex;
+  flex-direction: row;
 }
 
 @keyframes App-logo-float {

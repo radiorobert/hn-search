@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { submitSearch } from './searchSlice';
+import { fetchSearchResults } from './searchSlice';
 
 
-const SearchForm = ({ submitSearch }) => {
+const SearchForm = ({ fetchSearchResults }) => {
   const [searchValue, updateSearchValue] = useState('');  // hook for search field, redux for submitForm
 
   return (
@@ -15,7 +15,7 @@ const SearchForm = ({ submitSearch }) => {
         onChange={ e => updateSearchValue(e.target.value) }
       />
       <button
-        onClick={ e => submitSearch({text: searchValue}) }
+        onClick={ e => fetchSearchResults({text: searchValue}) }
       >
         GO!
       </button>
@@ -24,6 +24,6 @@ const SearchForm = ({ submitSearch }) => {
   );
 };
 
-const mapDispatchToProps = { submitSearch };
+const mapDispatchToProps = { fetchSearchResults };
 
 export default connect(null, mapDispatchToProps)(SearchForm);
