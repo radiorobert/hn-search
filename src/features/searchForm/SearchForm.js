@@ -8,17 +8,25 @@ const SearchForm = ({ fetchSearchResults }) => {
 
   return (
     <div>
-      <input
-        name="searchString"
-        value={ searchValue }
-        aria-label="Search Field"
-        onChange={ e => updateSearchValue(e.target.value) }
-      />
-      <button
-        onClick={ e => fetchSearchResults(searchValue) }
+      <form
+        onSubmit={e => {
+          e.preventDefault()
+          fetchSearchResults(searchValue.replace(/(<([^>]+)>)/gi, ""))
+        }}
       >
-        GO!
-      </button>
+        <input
+          name="searchString"
+          value={ searchValue }
+          aria-label="Search Field"
+          onChange={ e => updateSearchValue(e.target.value) }
+        />
+        <button
+          //onClick={ e => fetchSearchResults(searchValue) }
+          type="submit"
+        >
+          GO!
+        </button>
+      </form>
 
     </div>
   );
