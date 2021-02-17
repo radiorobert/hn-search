@@ -33,8 +33,8 @@ export const {
 // this was helpful
 // https://stackoverflow.com/questions/49155438/react-redux-is-adding-async-method-in-a-reducer-an-anti-pattern
 export const fetchSearchResults = searchStr => (dispatch, getState) =>  {
-  // Ensures we capture previous searches.
-  dispatch(submitSearch(searchStr));
+  // Ensure we capture previous searches.
+  dispatch(submitSearch({ text: searchStr }));
 
   // Opting for promises instead of await
   axios.get(`http://hn.algolia.com/api/v1/search?query=${searchStr}`)

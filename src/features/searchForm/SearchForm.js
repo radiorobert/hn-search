@@ -15,7 +15,7 @@ const SearchForm = ({ fetchSearchResults }) => {
         onChange={ e => updateSearchValue(e.target.value) }
       />
       <button
-        onClick={ e => fetchSearchResults({text: searchValue}) }
+        onClick={ e => fetchSearchResults(searchValue) }
       >
         GO!
       </button>
