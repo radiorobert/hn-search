@@ -9,10 +9,14 @@ const searchSlice = createSlice({
     resultMeta: null,
     pageNum: 1,
     error: '',
+    tags: "",
   },
   reducers: {
     submitSearch: (state, action) => {
       state.history.push( action.payload.text );
+    },
+    setTag: (state, action) => {
+      state.tags = action.payload;
     },
     fetchSearchSuccess: (state, action) => {
       state.currResults = action.payload.body.hits;
@@ -35,6 +39,7 @@ export const {
   fetchSearchSuccess,
   fetchSearchFailure,
   turnPage,
+  setTag,
 } = searchSlice.actions;
 
 export const handleSubmitSearch = searchStr => (dispatch, getState) => {
@@ -48,8 +53,18 @@ export const handleSubmitSearch = searchStr => (dispatch, getState) => {
 */
 export const fetchSearchResults = (dispatch, getState) =>  {
   let searchStr = getState().searches.history[getState().searches.history.length - 1];
+  let tag = getState().searches.tags;
 
-  axios.get(`http://hn.algolia.com/api/v1/search?query=${searchStr}&page=${getState().searches.pageNum}`)
+  let query = `http://hn.algolia.com/api/v1/search?query=${searchStr}`;
+
+
+  if(tag !== "") {
+    query = query.concat(`&tags=${tag}`);
+  }
+  query = query.concat(`&page=${getState().searches.pageNum}`);
+
+  console.log(query)
+  axios.get(query)
     .then(res => {
       dispatch(fetchSearchSuccess({body: res.data}));
     })

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { handleSubmitSearch } from './searchSlice';
+import { handleSubmitSearch, setTag } from './searchSlice';
 
 
-const SearchForm = ({ handleSubmitSearch }) => {
+const SearchForm = ({ handleSubmitSearch, setTag }) => {
   const [searchValue, updateSearchValue] = useState('');  // hook for search field, redux for submitForm
 
   return (
@@ -25,12 +25,32 @@ const SearchForm = ({ handleSubmitSearch }) => {
         >
           GO!
         </button>
+        <br/>
+        <label>
+          Search by date
+          <input
+            name="searchByDate"
+            type="checkbox"
+          />
+        </label>
+        &nbsp;|&nbsp;
+        <label>
+          Filter by tag:&nbsp;
+          <select onChange={ e => setTag(e.target.value) }>
+            <option value={ "all" }>All</option>
+            <option value={ "story" }>Stories</option>
+            <option value={ "comment" }>Comments</option>
+            <option value={ "ask_hn" }>Ask HN</option>
+            <option value={ "show_hn" }>Show HN</option>
+            <option value={ "poll" }>Polls</option>
+          </select>
+        </label>
       </form>
 
     </div>
   );
 };
 
-const mapDispatchToProps = { handleSubmitSearch };
+const mapDispatchToProps = { handleSubmitSearch, setTag };
 
 export default connect(null, mapDispatchToProps)(SearchForm);
