@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { fetchSearchResults } from './searchSlice';
+import { handleSubmitSearch } from './searchSlice';
 
 
-const SearchForm = ({ fetchSearchResults }) => {
+const SearchForm = ({ handleSubmitSearch }) => {
   const [searchValue, updateSearchValue] = useState('');  // hook for search field, redux for submitForm
 
   return (
@@ -11,7 +11,7 @@ const SearchForm = ({ fetchSearchResults }) => {
       <form
         onSubmit={e => {
           e.preventDefault()
-          fetchSearchResults(searchValue.replace(/(<([^>]+)>)/gi, ""))
+          handleSubmitSearch(searchValue.replace(/(<([^>]+)>)/gi, ""))
         }}
       >
         <input
@@ -21,7 +21,6 @@ const SearchForm = ({ fetchSearchResults }) => {
           onChange={ e => updateSearchValue(e.target.value) }
         />
         <button
-          //onClick={ e => fetchSearchResults(searchValue) }
           type="submit"
         >
           GO!
@@ -32,6 +31,6 @@ const SearchForm = ({ fetchSearchResults }) => {
   );
 };
 
-const mapDispatchToProps = { fetchSearchResults };
+const mapDispatchToProps = { handleSubmitSearch };
 
 export default connect(null, mapDispatchToProps)(SearchForm);
