@@ -6,13 +6,14 @@ const mapStateToProps = state => {
   };
 };
 
-const Result = ({ onClick, content }) => (
+const Result = ({ onClick, content, id }) => (
   <div
     style={{
       padding: '4px',
     }}
+    key={id}
   >
-    {content.title}<br/>{content.url}
+    {id + 1}. {content.title} (<a href={content.url}>{content.url}</a>)
   </div>
 );
 

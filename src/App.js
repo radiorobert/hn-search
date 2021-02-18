@@ -13,14 +13,8 @@ function App() {
         <SearchForm />
       </div>
 
-      <div id="others">
-        <div className="history">
-          <SearchList/>
-        </div>
-
-        <div id="results">
+      <div className="results">
           <SearchResultsList/>
-        </div>
       </div>
 
     </div>

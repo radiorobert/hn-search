@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  margin-left: 40px;
 }
 
 .App-logo {
@@ -18,15 +19,9 @@
   color: rgb(112, 76, 182);
 }
 
-#results {
-  width: 75%;
-}
-
-#history {
-  width: 25%;
-}
-.others {
-  justify-content: space-evenly;
+.results {
+  text-align: left;
+  justify-content: centered;
   display: flex;
   flex-direction: row;
 }

@@ -19,7 +19,7 @@ const SearchList = ({ prevSearches }) => {
       <ul>
         {prevSearches.map((text, id) => (
           <p key={ id }>
-            {id}. {text}
+            {id + 1}. {text}
           </p>
         ))}
       </ul>
