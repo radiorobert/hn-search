@@ -37,7 +37,7 @@ const SearchForm = ({ handleSubmitSearch, setQueryParam }) => {
         <label>
           Filter by tag:&nbsp;
           <select onChange={ e => setQueryParam({tags: e.target.value}) }>
-            <option value={ "all" }>All</option>
+            <option value={ "" }>All</option>
             <option value={ "story" }>Stories</option>
             <option value={ "comment" }>Comments</option>
             <option value={ "ask_hn" }>Ask HN</option>
