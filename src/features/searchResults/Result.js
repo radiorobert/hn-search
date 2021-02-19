@@ -13,7 +13,6 @@ const Headline = (props) => {
   let headline = "";
   let re = new RegExp('^(Ask HN|Show HN|Poll):.(.*)');  // TODO refine this.
 
-  console.log(props.content)
   if(props.content._tags[0] === "comment") {
     headline = props.content.comment_text.slice(0, 80).concat('...');
   } else if(props.content._tags[0] === "pollopt") {
