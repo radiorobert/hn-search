@@ -73,6 +73,9 @@ export const fetchSearchResults = (dispatch, getState) =>  {
 
  By having a wrapper here, we can issue any amount of page turning.
  We can also conduct any logic we see fit that doesn't belong in reducers.
+
+ TODO streamline that bulky if statement
+ FIXME this triggers a new get with whatever altered tag selector there is.
  */
 export const changePage = pageTurnAmt => (dispatch, getState) => {
   if(getState().searches.queryParams.page === 1 && pageTurnAmt < 0){

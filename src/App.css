@@ -37,3 +37,18 @@
     transform: translateY(0px)
   }
 }
+
+a {
+  font-size: 10px;
+}
+sup {
+  background-color: #bdbdbd;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-bottom: 1px;
+  padding-top: 1px;
+  border-radius: 15%;
+
+  font-size: 9;
+  color: black;
+}

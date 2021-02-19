@@ -17,10 +17,14 @@ const SearchResultsList = ({ results }) => {
       {results && <Paginator/> }
       <ul>
         {results && results.map((hit, id) => (
+          hit._tags[0] !== "pollopt" ?
           <Result
             content={hit}
             id={id}
           />
+          :
+          <>
+          </>
 
         ))}
       </ul>
