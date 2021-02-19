@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { handleSubmitSearch, setTag } from './searchSlice';
+import { handleSubmitSearch, setQueryParam } from './searchSlice';
 
 
-const SearchForm = ({ handleSubmitSearch, setTag }) => {
+const SearchForm = ({ handleSubmitSearch, setQueryParam }) => {
   const [searchValue, updateSearchValue] = useState('');  // hook for search field, redux for submitForm
 
   return (
@@ -36,7 +36,7 @@ const SearchForm = ({ handleSubmitSearch, setTag }) => {
         &nbsp;|&nbsp;
         <label>
           Filter by tag:&nbsp;
-          <select onChange={ e => setTag(e.target.value) }>
+          <select onChange={ e => setQueryParam({tags: e.target.value}) }>
             <option value={ "all" }>All</option>
             <option value={ "story" }>Stories</option>
             <option value={ "comment" }>Comments</option>
@@ -51,6 +51,6 @@ const SearchForm = ({ handleSubmitSearch, setTag }) => {
   );
 };
 
-const mapDispatchToProps = { handleSubmitSearch, setTag };
+const mapDispatchToProps = { handleSubmitSearch, setQueryParam  };
 
 export default connect(null, mapDispatchToProps)(SearchForm);

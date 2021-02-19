@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 const mapStateToProps = state => {
   return {
-    pageNum: state.searches.pageNum,
+    pageNum: state.searches.queryParams.page,
     resultMeta: state.searches.resultMeta
   };
 };

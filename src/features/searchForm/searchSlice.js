@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 const axios = require('axios');
+const querystring = require('querystring');
 
 const searchSlice = createSlice({
   name: 'searches',
@@ -9,14 +10,15 @@ const searchSlice = createSlice({
     resultMeta: null,
     pageNum: 1,
     error: '',
-    tags: "",
+    queryParams: { page: 1 }
   },
   reducers: {
     submitSearch: (state, action) => {
       state.history.push( action.payload.text );
+      state.queryParams.page = 1;
     },
-    setTag: (state, action) => {
-      state.tags = action.payload;
+    setQueryParam: (state, action) => {
+      state.queryParams = { ...state.queryParams, ...action.payload };
     },
     fetchSearchSuccess: (state, action) => {
       state.currResults = action.payload.body.hits;
@@ -27,8 +29,8 @@ const searchSlice = createSlice({
       state.resultMeta = null;
       state.error = "ERROR: the search failed.";
     },
-    turnPage: (state, action) => {  // one function seems to reduce strange redux complexity elsewhere
-      state.pageNum += action.payload;
+    turnPage: (state, action) => { // has a bit more logic than setQueryParam
+      state.queryParams.page += action.payload;
     },
   },
 });
@@ -39,32 +41,25 @@ export const {
   fetchSearchSuccess,
   fetchSearchFailure,
   turnPage,
-  setTag,
+  setQueryParam,
 } = searchSlice.actions;
 
+// Wrapper for dispatch functions
 export const handleSubmitSearch = searchStr => (dispatch, getState) => {
   dispatch(submitSearch({ text: searchStr }));
+  dispatch(setQueryParam({query: searchStr.replace(/(<([^>]+)>)/gi, "")}));
   dispatch(fetchSearchResults);
 };
 
 /*
-  this was helpful
-  https://stackoverflow.com/questions/49155438/react-redux-is-adding-async-method-in-a-reducer-an-anti-pattern
+  Responsible for the actual fetching of data
+  Builds query string from state.
 */
 export const fetchSearchResults = (dispatch, getState) =>  {
-  let searchStr = getState().searches.history[getState().searches.history.length - 1];
-  let tag = getState().searches.tags;
+  let url = "http://hn.algolia.com/api/v1/search?";
+  let queryParams = getState().searches.queryParams;
 
-  let query = `http://hn.algolia.com/api/v1/search?query=${searchStr}`;
-
-
-  if(tag !== "") {
-    query = query.concat(`&tags=${tag}`);
-  }
-  query = query.concat(`&page=${getState().searches.pageNum}`);
-
-  console.log(query)
-  axios.get(query)
+  axios.get(url, { params: {...queryParams}})
     .then(res => {
       dispatch(fetchSearchSuccess({body: res.data}));
     })
@@ -80,9 +75,9 @@ export const fetchSearchResults = (dispatch, getState) =>  {
  We can also conduct any logic we see fit that doesn't belong in reducers.
  */
 export const changePage = pageTurnAmt => (dispatch, getState) => {
-  if(getState().searches.pageNum === 1 && pageTurnAmt < 0){
+  if(getState().searches.queryParams.page === 1 && pageTurnAmt < 0){
     return;
-  } else if(getState().searches.pageNum === getState().searches.resultMeta.nbPages) {
+  } else if(getState().searches.queryParams.page === getState().searches.resultMeta.nbPages) {
     return;
   } else {
     dispatch(turnPage(pageTurnAmt));
@@ -90,10 +85,5 @@ export const changePage = pageTurnAmt => (dispatch, getState) => {
 
   dispatch(fetchSearchResults);
 };
-
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state) => state.counter.value)`
-export const selectSearchValues = state => state.searches;
 
 export default searchSlice.reducer;
